@@ -1,8 +1,11 @@
 package com.jhotel.steven.jhotel_android_nurhazbiy;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,12 +39,24 @@ public class RegisterActivity extends AppCompatActivity {
                             JSONObject jsonResponse = new JSONObject(response);
                             if (jsonResponse != null) {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                                builder.setNeutralButton("Dismiss", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                        Intent regisInt = new Intent(RegisterActivity.this, LoginActivity.class);
+                                        RegisterActivity.this.startActivity(regisInt);
+                                    }
+                                });
                                 builder.setMessage("Registration Success")
                                         .create()
                                         .show();
                             }
                         } catch (JSONException e) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                            builder.setNeutralButton("Dismiss", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
                             builder.setMessage("Registration Failed.")
                                     .create()
                                     .show();

@@ -1,5 +1,6 @@
 package com.jhotel.steven.jhotel_android_nurhazbiy;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -38,12 +39,25 @@ public class LoginActivity extends AppCompatActivity{
                             JSONObject jsonResponse = new JSONObject(response);
                             if (jsonResponse != null) {
                                 AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
+                                builder1.setNeutralButton("Dismiss", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                        Intent regisInt = new Intent(LoginActivity.this, MainActivity.class);
+                                        LoginActivity.this.startActivity(regisInt);
+                                    }
+                                });
                                 builder1.setMessage("Login success")
                                         .create()
                                         .show();
                             }
                         } catch (JSONException e){
                             AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
+                            builder1.setNeutralButton("Dismiss", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                    //dialog.dismiss();
+                                }
+                            });
                             builder1.setMessage("Login failed")
                                     .create()
                                     .show();
