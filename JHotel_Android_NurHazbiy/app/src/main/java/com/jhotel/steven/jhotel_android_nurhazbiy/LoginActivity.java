@@ -1,13 +1,17 @@
 package com.jhotel.steven.jhotel_android_nurhazbiy;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -30,6 +34,10 @@ public class LoginActivity extends AppCompatActivity{
         loginButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                //hide keyboard
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
                 final String email = emailEditText.getText().toString();
                 final String password = passwordEditText.getText().toString();
                 Response.Listener<String> responseListener = new Response.Listener<String> () {
@@ -51,13 +59,14 @@ public class LoginActivity extends AppCompatActivity{
                                         .show();
                             }
                         } catch (JSONException e){
-                            AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
+                            final AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
                             builder1.setNeutralButton("Dismiss", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.cancel();
                                     //dialog.dismiss();
                                 }
                             });
+                            
                             builder1.setMessage("Login failed")
                                     .create()
                                     .show();
