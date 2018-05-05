@@ -54,4 +54,13 @@ public class Hotel {
 
         this.bintang = bintang;
     }
+
+    public String toString() {
+        /*return "Hotel{" +
+                "nama='" + this.nama + "', " +
+                "lokasi='" + this.lokasi.getDeskripsi() + "', " +
+                "bintang=" + this.bintang +
+                "}";*/
+        return this.nama;
+    }
 }

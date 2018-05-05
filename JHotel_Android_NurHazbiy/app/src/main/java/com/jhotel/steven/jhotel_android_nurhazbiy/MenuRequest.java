@@ -9,15 +9,10 @@ import java.util.Map;
  */
 
 public class MenuRequest extends StringRequest {
-    private static final String Regis_URL = "http://10.0.2.2/vacantrooms";
-    private Map<String, String> params;
+    private static final String Regis_URL = "http://10.0.2.2:8080/vacantrooms";
     public MenuRequest(Response.Listener<String> listener) {
-        super(Method.GET, Regis_URL, listener, null);
-        this.params = params;
-    }
-
-    @Override
-    public Map<String, String> getParams() { return params;
+        super(Method.GET, Regis_URL, listener,null );
+        //System.out.println("haiahai");
     }
 }
 

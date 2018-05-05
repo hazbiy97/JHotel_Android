@@ -1,5 +1,7 @@
 package com.jhotel.steven.jhotel_android_nurhazbiy;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,6 +18,7 @@ import android.widget.TextView;
  */
 
 public class MenuListAdapter extends BaseExpandableListAdapter {
+
     private Context _context;
     private List<String> _listDataHeader; // header titles
     // child data in format of header title, child title

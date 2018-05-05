@@ -55,4 +55,13 @@ public class Room {
 
         this.tipeKamar = tipeKamar;
     }
+
+    public String toString() {
+        /*return "Hotel{" +
+                "nama='" + this.nama + "', " +
+                "lokasi='" + this.lokasi.getDeskripsi() + "', " +
+                "bintang=" + this.bintang +
+                "}";*/
+        return this.roomNumber;
+    }
 }

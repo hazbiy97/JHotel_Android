@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -21,14 +22,15 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private ArrayList<Hotel> listHotel;
+    private ArrayList<Room> listRoom ;
+    private HashMap<Hotel ,ArrayList<Room>> childMapping ;
 
-    private ArrayList<Hotel> listHotel = new ArrayList<>();
-    private ArrayList<Room> listRoom = new ArrayList<>();
-    private HashMap<Hotel,ArrayList<Room>> childMapping = new HashMap<> ();
-    ExpandableListAdapter listAdapter;
-    ExpandableListView expListView;
-    List<String> listDataHeader;
-    HashMap<String, List<String>> listDataChild;
+    private List<String> listDataHeader ;
+    private HashMap<String, List<String>> listDataChild ;
+
+    private ExpandableListAdapter listAdapter;
+    private ExpandableListView expListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,94 +41,137 @@ public class MainActivity extends AppCompatActivity {
         expListView = (ExpandableListView) findViewById(R.id.lvExp);
 
         // preparing list data
-        prepareListData();
-
-        listAdapter = new MenuListAdapter(this, listDataHeader, listDataChild);
-
-        // setting list adapter
-        expListView.setAdapter(listAdapter);
-    }
-
-    /*
-     * Preparing the list data
-     */
-    private void prepareListData() {
         refreshList();
-        /*
-        listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<String>>();
 
-        // Adding child data
-        listDataHeader.add("Top 250");
-        listDataHeader.add("Now Showing");
-        listDataHeader.add("Coming Soon..");
+        // Listview Group click listener
+        expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
 
-        // Adding child data
-        List<String> top250 = new ArrayList<String>();
-        top250.add("The Shawshank Redemption");
-        top250.add("The Godfather");
-        top250.add("The Godfather: Part II");
-        top250.add("Pulp Fiction");
-        top250.add("The Good, the Bad and the Ugly");
-        top250.add("The Dark Knight");
-        top250.add("12 Angry Men");
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v,
+                                        int groupPosition, long id) {
+                // Toast.makeText(getApplicationContext(),
+                // "Group Clicked " + listDataHeader.get(groupPosition),
+                // Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
 
-        List<String> nowShowing = new ArrayList<String>();
-        nowShowing.add("The Conjuring");
-        nowShowing.add("Despicable Me 2");
-        nowShowing.add("Turbo");
-        nowShowing.add("Grown Ups 2");
-        nowShowing.add("Red 2");
-        nowShowing.add("The Wolverine");
+        // Listview Group expanded listener
+        expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 
-        List<String> comingSoon = new ArrayList<String>();
-        comingSoon.add("2 Guns");
-        comingSoon.add("The Smurfs 2");
-        comingSoon.add("The Spectacular Now");
-        comingSoon.add("The Canyons");
-        comingSoon.add("Europa Report");
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                Toast.makeText(getApplicationContext(),
+                        listDataHeader.get(groupPosition) + " Expanded",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
 
-        listDataChild.put(listDataHeader.get(0), top250); // Header, Child data
-        listDataChild.put(listDataHeader.get(1), nowShowing);
-        listDataChild.put(listDataHeader.get(2), comingSoon);
-        */
+        // Listview Group collasped listener
+        expListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+
+            @Override
+            public void onGroupCollapse(int groupPosition) {
+                Toast.makeText(getApplicationContext(),
+                        listDataHeader.get(groupPosition) + " Collapsed",
+                        Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        // Listview on child click listener
+        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v,
+                                        int groupPosition, int childPosition, long id) {
+                // TODO Auto-generated method stub
+                Toast.makeText(
+                        getApplicationContext(),
+                        listDataHeader.get(groupPosition)
+                                + " : "
+                                + listDataChild.get(
+                                listDataHeader.get(groupPosition)).get(
+                                childPosition), Toast.LENGTH_SHORT)
+                        .show();
+                return false;
+            }
+        });
     }
-
 
     public void refreshList(){
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                listHotel = new ArrayList<>();
+                listRoom = new ArrayList<>();
+                childMapping = new HashMap<> ();
+
+                listDataHeader = new ArrayList<>();
+                listDataChild = new HashMap<>();
+                int listHotelSize = 0;
+
                 try {
                     JSONArray jsonResponse = new JSONArray(response);
-                    JSONObject e = jsonResponse.getJSONObject(0).getJSONObject("hotel");
-                    JSONObject lokasi = e.getJSONObject("lokasi");
+                    for (int loop = 0; loop < jsonResponse.length(); loop ++) {
 
-                    float x_coord = BigDecimal.valueOf(lokasi.getDouble("x")).floatValue();
-                    float y_coord = BigDecimal.valueOf(lokasi.getDouble("y")).floatValue();
-                    String description = lokasi.getString("deskripsi");
-                    int id = e.getInt("id");
-                    String nama = e.getString("nama");
-                    int bintang = e.getInt("Bintang");
+                        JSONObject e = jsonResponse.getJSONObject(loop).getJSONObject("hotel");
+                        JSONObject lokasi = e.getJSONObject("lokasi");
 
-                    Hotel hotel =  new Hotel(id,nama,new Lokasi(x_coord,y_coord,description), bintang);
-                    listHotel.add(hotel);
+                        List<String> _listRoom = new ArrayList<>();
 
-                    for (int i = 0; i < jsonResponse.length(); i++) {
-                        JSONObject getResponse = jsonResponse.getJSONObject(i);
+                        float x_coord = BigDecimal.valueOf(lokasi.getDouble("x")).floatValue();
+                        float y_coord = BigDecimal.valueOf(lokasi.getDouble("y")).floatValue();
+                        String description = lokasi.getString("deskripsi");
+                        int id = e.getInt("id");
+                        String nama = e.getString("nama");
+                        int bintang = e.getInt("bintang");
+                        Hotel newHotel = new Hotel(id, nama, new Lokasi(x_coord, y_coord, description), bintang);
 
-                        String nomorKamar = getResponse.getString("nomorKamar");
-                        String statusKamar = getResponse.getString("statusKamar");
-                        double dailyTariff = getResponse.getDouble("dailyTariff");
-                        String tipeKamar = getResponse.getString("tipeKamar");
+                        if (hotelChecker(newHotel)) {
+                            listHotel.add(newHotel);
+                            listDataHeader.add(newHotel.getNama());
+                            listHotelSize += 1;
 
-                        Room room = new Room(nomorKamar,statusKamar,dailyTariff,tipeKamar);
-                        listRoom.add(room);
+                            //System.out.println(newHotel.getNama());
+                            for (int i = 0; i < jsonResponse.length(); i++) {
+                                JSONObject getResponse = jsonResponse.getJSONObject(i);
+                                JSONObject f = jsonResponse.getJSONObject(i).getJSONObject("hotel");
+
+                                String namaHotel = f.getString("nama");
+                                if (listHotel.get(listHotelSize - 1).getNama().compareTo(namaHotel) == 0) {
+                                    //System.out.println(namaHotel + i);
+                                    String nomorKamar = getResponse.getString("nomorKamar");
+                                    String statusKamar = getResponse.getString("statusKamar");
+                                    double dailyTariff = getResponse.getDouble("dailyTariff");
+                                    String tipeKamar = getResponse.getString("tipeKamar");
+                                    Room room = new Room(nomorKamar, statusKamar, dailyTariff, tipeKamar);
+
+                                    listRoom.add(room);
+                                    _listRoom.add(room.getRoomNumber());
+                                }
+                            }
+                        /*Debug
+                        for (String nems: _listRoom
+                              ) {
+                            System.out.println(nems);
+                        }
+
+                        System.out.println("---");*/
+                            childMapping.put(newHotel, listRoom);
+                            listDataChild.put(newHotel.getNama(), _listRoom);
+                        }
                     }
+                    listAdapter = new MenuListAdapter(MainActivity.this, listDataHeader, listDataChild);
 
-                    childMapping.put(listHotel.get(0),listRoom);
+                    //Refresh view
+                    expListView.setAdapter(listAdapter);
                 }catch (JSONException ex){
-
+                    System.out.println(ex.getMessage());
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.this);
+                    builder1.setMessage("Error connection")
+                            .create()
+                            .show();
                 }
             }
         };
@@ -134,5 +179,19 @@ public class MainActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
         queue.add(menuRequest);
     }
+
+    private boolean hotelChecker(Hotel baru) {
+        if(listHotel.size() != 0) {
+            for (Hotel hotel :
+                    listHotel) {
+                if (hotel.getNama().compareTo(baru.getNama()) == 0 || (hotel.getLokasi().getX_coord() == baru.getLokasi().getX_coord() && hotel.getLokasi().getY_coord() == baru.getLokasi().getY_coord())) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return true;
+    }
+
 }
 

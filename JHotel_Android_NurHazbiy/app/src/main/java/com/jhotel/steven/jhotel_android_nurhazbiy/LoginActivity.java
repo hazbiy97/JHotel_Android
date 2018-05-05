@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity{
                     public void onResponse (String response) {
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
-                            if (jsonResponse == null) {
+                            if (jsonResponse != null) {
                                 AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
                                 builder1.setMessage("Login success")
                                         .create()
