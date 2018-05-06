@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.jhotel.steven.jhotel_android_nurhazbiy.BuatPesananActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constratinLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:isScrollContainer="true">
+
+        <TextView
+            android:id="@+id/staticRoomNumber"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:ems="10"
+            android:text="@string/full_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/room_number"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/staticRoomNumber"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/staticTariff"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/tariff"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/staticRoomNumber" />
+
+        <TextView
+            android:id="@+id/tariff"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/staticTariff"
+            app:layout_constraintTop_toBottomOf="@+id/room_number" />
+
+        <TextView
+            android:id="@+id/staticDurasi"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/durasi"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/staticTariff" />
+
+        <EditText
+            android:id="@+id/durasi_hari"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:hint="@string/in_days"
+
+            android:inputType="number|numberDecimal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/staticDurasi"
+            app:layout_constraintTop_toBottomOf="@+id/tariff" />
+
+        <TextView
+            android:id="@+id/staticTotal"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/total"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/staticDurasi" />
+
+        <TextView
+            android:id="@+id/total_biaya"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/staticTotal"
+            app:layout_constraintTop_toBottomOf="@+id/durasi_hari" />
+
+        <Button
+            android:id="@+id/hitung"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/hitung"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/staticTotal" />
+
+        <Button
+            android:id="@+id/pesan"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/pesan"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hitung"
+            app:layout_constraintVertical_bias="0.0" />
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

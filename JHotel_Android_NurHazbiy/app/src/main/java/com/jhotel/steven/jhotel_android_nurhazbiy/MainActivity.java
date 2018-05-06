@@ -1,9 +1,11 @@
 package com.jhotel.steven.jhotel_android_nurhazbiy;
 
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
@@ -32,11 +34,22 @@ public class MainActivity extends AppCompatActivity {
     private ExpandableListAdapter listAdapter;
     private ExpandableListView expListView;
 
+    private int currentUserId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        final Button pesananButton = (Button) findViewById(R.id.pesanan);
+
+        //getIntent
+        if (savedInstanceState == null) {
+            currentUserId = getIntent().getIntExtra("currentUserId",0);
+        } else {
+            currentUserId= (int) savedInstanceState.getSerializable("currentUserId");
+        }
+
+        System.out.println(currentUserId);
         // get the listview
         expListView = (ExpandableListView) findViewById(R.id.lvExp);
 
@@ -85,7 +98,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
-                // TODO Auto-generated method stub
+
+                Intent regisInt = new Intent(MainActivity.this, BuatPesananActivity.class);
+                regisInt.putExtra("currentUserId", currentUserId);
+                regisInt.putExtra("id_hotel", listHotel.get(groupPosition).getId());
+                regisInt.putExtra("daily_tariff", childMapping.get(listHotel.get(groupPosition)).get(childPosition).getDailyTariff());
+                regisInt.putExtra("room_number", childMapping.get(listHotel.get(groupPosition)).get(childPosition).getRoomNumber());
+                MainActivity.this.startActivity(regisInt);
+
+                return false;
+                /*TODO Auto-generated method stub
                 Toast.makeText(
                         getApplicationContext(),
                         listDataHeader.get(groupPosition)
@@ -93,8 +115,18 @@ public class MainActivity extends AppCompatActivity {
                                 + listDataChild.get(
                                 listDataHeader.get(groupPosition)).get(
                                 childPosition), Toast.LENGTH_SHORT)
-                        .show();
-                return false;
+                        .show();*/
+                //change Activity
+            }
+        });
+
+        // Pesanan on click listener
+        pesananButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent regisInt = new Intent(MainActivity.this, SelesaiPesananActivity.class);
+                regisInt.putExtra("currentUserId", currentUserId);
+                MainActivity.this.startActivity(regisInt);
             }
         });
     }
@@ -109,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
 
                 listDataHeader = new ArrayList<>();
                 listDataChild = new HashMap<>();
+
                 int listHotelSize = 0;
 
                 try {
@@ -119,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                         JSONObject lokasi = e.getJSONObject("lokasi");
 
                         List<String> _listRoom = new ArrayList<>();
-
+                        ArrayList<Room> listRoomTmp = new ArrayList<>();
                         float x_coord = BigDecimal.valueOf(lokasi.getDouble("x")).floatValue();
                         float y_coord = BigDecimal.valueOf(lokasi.getDouble("y")).floatValue();
                         String description = lokasi.getString("deskripsi");
@@ -147,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
                                     String tipeKamar = getResponse.getString("tipeKamar");
                                     Room room = new Room(nomorKamar, statusKamar, dailyTariff, tipeKamar);
 
+                                    listRoomTmp.add(room);
                                     listRoom.add(room);
                                     _listRoom.add(room.getRoomNumber());
                                 }
@@ -158,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                         System.out.println("---");*/
-                            childMapping.put(newHotel, listRoom);
+                            childMapping.put(newHotel, listRoomTmp);
                             listDataChild.put(newHotel.getNama(), _listRoom);
                         }
                     }

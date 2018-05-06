@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.jhotel.steven.jhotel_android_nurhazbiy.SelesaiPesananActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constratinLayoutPesanan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:isScrollContainer="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/staticIdPesanan"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:ems="10"
+            android:text="@string/id_pesanan"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/id_pesanan"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/staticIdPesanan"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/staticBiaya"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/biaya"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/staticIdPesanan" />
+
+        <TextView
+            android:id="@+id/biaya_pesanan"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/staticBiaya"
+            app:layout_constraintTop_toBottomOf="@+id/id_pesanan" />
+
+        <TextView
+            android:id="@+id/staticJumlahHari"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/jumlah_hari"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/staticBiaya" />
+
+        <TextView
+            android:id="@+id/jumlah_hari"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/staticJumlahHari"
+            app:layout_constraintTop_toBottomOf="@+id/biaya_pesanan" />
+
+        <TextView
+            android:id="@+id/staticTanggalPesan"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/tanggal_pesan"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/staticJumlahHari" />
+
+        <TextView
+            android:id="@+id/tanggal_pesanan"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/staticTanggalPesan"
+            app:layout_constraintTop_toBottomOf="@+id/jumlah_hari" />
+
+        <Button
+            android:id="@+id/batalPesanan"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/batal_pesanan"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/staticTanggalPesan" />
+
+        <Button
+            android:id="@+id/selesaiPesanan"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="15dp"
+            android:text="@string/finish_pesanan"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/batalPesanan"/>
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

@@ -18,8 +18,13 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity{
     @Override
@@ -46,11 +51,15 @@ public class LoginActivity extends AppCompatActivity{
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
                             if (jsonResponse != null) {
+                                final int currentUserId = jsonResponse.getInt("id");
                                 AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
                                 builder1.setNeutralButton("Dismiss", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
                                         dialog.cancel();
+
+                                        //change Activity with extra
                                         Intent regisInt = new Intent(LoginActivity.this, MainActivity.class);
+                                        regisInt.putExtra("currentUserId", currentUserId);
                                         LoginActivity.this.startActivity(regisInt);
                                     }
                                 });
@@ -66,7 +75,7 @@ public class LoginActivity extends AppCompatActivity{
                                     //dialog.dismiss();
                                 }
                             });
-                            
+
                             builder1.setMessage("Login failed")
                                     .create()
                                     .show();

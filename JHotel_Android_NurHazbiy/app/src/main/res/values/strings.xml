@@ -3,7 +3,20 @@
     <string name="password">Password</string>
     <string name="e_mail">E-mail</string>
     <string name="login">Login</string>
-    <string name="full_name">Full Name</string>
     <string name="register_here">Register Here!</string>
     <string name="register">Register</string>
+    <string name="durasi">Durasi :</string>
+    <string name="full_name">Full Name :</string>
+    <string name="total">Total :</string>
+    <string name="tariff">Tariff :</string>
+    <string name="hitung">Hitung</string>
+    <string name="pesan">Pesan</string>
+    <string name="in_days">(In days)</string>
+    <string name="id_pesanan">Id Pesanan :</string>
+    <string name="biaya">Biaya :</string>
+    <string name="jumlah_hari">Jumlah Hari :</string>
+    <string name="tanggal_pesan">Tanggal Pesan :</string>
+    <string name="batal_pesanan">Batal Pesanan</string>
+    <string name="finish_pesanan">Finish Pesanan</string>
+    <string name="pesanan">Pesanan</string>
 </resources>
