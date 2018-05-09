@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.jhotel.steven.jhotel_android_nurhazbiy.BuatPesananActivity">
+    tools:context="com.jhotel.steven.jhotel_android_nurhazbiy.activities.BuatPesananActivity">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constratinLayout"
@@ -35,13 +35,32 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/staticRoomType"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/tipe_kamar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/staticRoomNumber" />
+
+        <TextView
+            android:id="@+id/room_type"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/staticTariff"
+            app:layout_constraintTop_toBottomOf="@+id/room_number" />
+
+        <TextView
             android:id="@+id/staticTariff"
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_marginTop="5dp"
             android:text="@string/tariff"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/staticRoomNumber" />
+            app:layout_constraintTop_toBottomOf="@+id/staticRoomType" />
 
         <TextView
             android:id="@+id/tariff"
@@ -51,7 +70,7 @@
             android:layout_marginStart="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/staticTariff"
-            app:layout_constraintTop_toBottomOf="@+id/room_number" />
+            app:layout_constraintTop_toBottomOf="@+id/room_type" />
 
         <TextView
             android:id="@+id/staticDurasi"

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.jhotel.steven.jhotel_android_nurhazbiy.LoginActivity">
+    tools:context="com.jhotel.steven.jhotel_android_nurhazbiy.activities.LoginActivity">
 
 
     <android.support.constraint.ConstraintLayout

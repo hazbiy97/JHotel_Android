@@ -1,4 +1,4 @@
-package com.jhotel.steven.jhotel_android_nurhazbiy;
+package com.jhotel.steven.jhotel_android_nurhazbiy.activities;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,27 +10,23 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.Space;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.jhotel.steven.jhotel_android_nurhazbiy.APIRequest.LoginRequest;
+import com.jhotel.steven.jhotel_android_nurhazbiy.R;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 public class LoginActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         final EditText emailEditText = (EditText) findViewById(R.id.emailEditText);
         final EditText passwordEditText = (EditText) findViewById(R.id.passwordEditText);
         final Button loginButton = (Button) findViewById(R.id.loginButton);
@@ -39,7 +35,7 @@ public class LoginActivity extends AppCompatActivity{
         loginButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //hide keyboard
+                //TODO hide keyboard
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 

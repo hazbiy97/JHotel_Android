@@ -1,18 +1,20 @@
-package com.jhotel.steven.jhotel_android_nurhazbiy;
+package com.jhotel.steven.jhotel_android_nurhazbiy.Fragment;
 
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.toolbox.Volley;
+import com.jhotel.steven.jhotel_android_nurhazbiy.APIRequest.*;
+import com.jhotel.steven.jhotel_android_nurhazbiy.activities.BuatPesananActivity;
+import com.jhotel.steven.jhotel_android_nurhazbiy.Object.*;
+import com.jhotel.steven.jhotel_android_nurhazbiy.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,40 +25,54 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class HomeFragment extends Fragment {
+    // TODO: Rename parameter arguments, choose names that match
+    private int currentUserId;
     private ArrayList<Hotel> listHotel;
     private ArrayList<Room> listRoom ;
     private HashMap<Hotel ,ArrayList<Room>> childMapping ;
 
-    private List<String> listDataHeader ;
-    private HashMap<String, List<String>> listDataChild ;
-
     private ExpandableListAdapter listAdapter;
     private ExpandableListView expListView;
 
-    private int currentUserId;
+    public HomeFragment() {
+        // Required empty public constructor
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public void onResume(){
+        super.onResume();
 
-        final Button pesananButton = (Button) findViewById(R.id.pesanan);
+        refreshList();
+    }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_home, container, false);
+    }
 
-        //getIntent
-        if (savedInstanceState == null) {
-            currentUserId = getIntent().getIntExtra("currentUserId",0);
-        } else {
-            currentUserId= (int) savedInstanceState.getSerializable("currentUserId");
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState){
+        super.onActivityCreated(savedInstanceState);
+
+        //TODO Get Bundle Extra
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            currentUserId = bundle.getInt("currentUserId", 0);
         }
 
-        System.out.println(currentUserId);
-        // get the listview
-        expListView = (ExpandableListView) findViewById(R.id.lvExp);
+        //TODO check session if done or not
+        checkSession();
+        //System.out.println(currentUserId);
 
-        // preparing list data
+        //TODO get the listview
+        expListView = (ExpandableListView) getView().findViewById(R.id.lvExp);
+
+        //TODO preparing list data
         refreshList();
 
-        // Listview Group click listener
+        //TODO Listview Group click listener
         expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
 
             @Override
@@ -69,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /*TODO Extra Features
         // Listview Group expanded listener
         expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 
@@ -90,21 +107,23 @@ public class MainActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
 
             }
-        });
+        });*/
 
-        // Listview on child click listener
+        //TODO Listview on child click listener
         expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
 
-                Intent regisInt = new Intent(MainActivity.this, BuatPesananActivity.class);
+                //TODO Intent with extra
+                Intent regisInt = new Intent(getActivity(), BuatPesananActivity.class);
                 regisInt.putExtra("currentUserId", currentUserId);
                 regisInt.putExtra("id_hotel", listHotel.get(groupPosition).getId());
                 regisInt.putExtra("daily_tariff", childMapping.get(listHotel.get(groupPosition)).get(childPosition).getDailyTariff());
                 regisInt.putExtra("room_number", childMapping.get(listHotel.get(groupPosition)).get(childPosition).getRoomNumber());
-                MainActivity.this.startActivity(regisInt);
+                regisInt.putExtra("room_type", childMapping.get(listHotel.get(groupPosition)).get(childPosition).getTipeKamar());
+                getActivity().startActivity(regisInt);
 
                 return false;
                 /*TODO Auto-generated method stub
@@ -116,17 +135,6 @@ public class MainActivity extends AppCompatActivity {
                                 listDataHeader.get(groupPosition)).get(
                                 childPosition), Toast.LENGTH_SHORT)
                         .show();*/
-                //change Activity
-            }
-        });
-
-        // Pesanan on click listener
-        pesananButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent regisInt = new Intent(MainActivity.this, SelesaiPesananActivity.class);
-                regisInt.putExtra("currentUserId", currentUserId);
-                MainActivity.this.startActivity(regisInt);
             }
         });
     }
@@ -135,15 +143,15 @@ public class MainActivity extends AppCompatActivity {
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                //TODO resetting data
                 listHotel = new ArrayList<>();
                 listRoom = new ArrayList<>();
                 childMapping = new HashMap<> ();
-
-                listDataHeader = new ArrayList<>();
-                listDataChild = new HashMap<>();
-
+                List<String> listDataHeader = new ArrayList<>();;
+                HashMap<String, List<String>> listDataChild = new HashMap<>() ;
                 int listHotelSize = 0;
 
+                //TODO Json mapping
                 try {
                     JSONArray jsonResponse = new JSONArray(response);
                     for (int loop = 0; loop < jsonResponse.length(); loop ++) {
@@ -151,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
                         JSONObject e = jsonResponse.getJSONObject(loop).getJSONObject("hotel");
                         JSONObject lokasi = e.getJSONObject("lokasi");
 
+                        //TODO JSON Mapping hotel object
                         List<String> _listRoom = new ArrayList<>();
                         ArrayList<Room> listRoomTmp = new ArrayList<>();
                         float x_coord = BigDecimal.valueOf(lokasi.getDouble("x")).floatValue();
@@ -161,19 +170,21 @@ public class MainActivity extends AppCompatActivity {
                         int bintang = e.getInt("bintang");
                         Hotel newHotel = new Hotel(id, nama, new Lokasi(x_coord, y_coord, description), bintang);
 
+                        //TODO checking list
                         if (hotelChecker(newHotel)) {
                             listHotel.add(newHotel);
                             listDataHeader.add(newHotel.getNama());
                             listHotelSize += 1;
 
                             //System.out.println(newHotel.getNama());
+                            //TODO checking room with same hotel
                             for (int i = 0; i < jsonResponse.length(); i++) {
                                 JSONObject getResponse = jsonResponse.getJSONObject(i);
                                 JSONObject f = jsonResponse.getJSONObject(i).getJSONObject("hotel");
 
                                 String namaHotel = f.getString("nama");
                                 if (listHotel.get(listHotelSize - 1).getNama().compareTo(namaHotel) == 0) {
-                                    //System.out.println(namaHotel + i);
+                                    //TODO JSON mapping with same hotel
                                     String nomorKamar = getResponse.getString("nomorKamar");
                                     String statusKamar = getResponse.getString("statusKamar");
                                     double dailyTariff = getResponse.getDouble("dailyTariff");
@@ -183,35 +194,37 @@ public class MainActivity extends AppCompatActivity {
                                     listRoomTmp.add(room);
                                     listRoom.add(room);
                                     _listRoom.add(room.getRoomNumber());
+                                    //System.out.println(namaHotel + i);
                                 }
                             }
-                        /*Debug
-                        for (String nems: _listRoom
-                              ) {
-                            System.out.println(nems);
-                        }
+                            /*TODO Debugging vacant rooms
+                            for (String nems: _listRoom
+                                  ) {
+                                System.out.println(nems);
+                            }
 
-                        System.out.println("---");*/
+                            System.out.println("---");*/
+
                             childMapping.put(newHotel, listRoomTmp);
                             listDataChild.put(newHotel.getNama(), _listRoom);
                         }
                     }
-                    listAdapter = new MenuListAdapter(MainActivity.this, listDataHeader, listDataChild);
+                    listAdapter = new MenuListAdapter(getActivity(), listDataHeader, listDataChild);
 
                     //Refresh view
                     expListView.setAdapter(listAdapter);
                 }catch (JSONException ex){
                     System.out.println(ex.getMessage());
-                    AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.this);
-                    builder1.setMessage("Error connection")
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
+                    builder1.setMessage("Error connection\nPlease try again later")
                             .create()
                             .show();
                 }
             }
         };
+        //TODO add API request to queue
         MenuRequest menuRequest = new MenuRequest(responseListener);
-        RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-        queue.add(menuRequest);
+        ApplicationVolley.getInstance().getRequestQueue().add(menuRequest);
     }
 
     private boolean hotelChecker(Hotel baru) {
@@ -227,5 +240,9 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-}
+    private void checkSession(){
+        if(currentUserId == 0){
 
+        }
+    }
+}

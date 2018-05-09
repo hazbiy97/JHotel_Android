@@ -1,4 +1,4 @@
-package com.jhotel.steven.jhotel_android_nurhazbiy;
+package com.jhotel.steven.jhotel_android_nurhazbiy.APIRequest;
 
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;

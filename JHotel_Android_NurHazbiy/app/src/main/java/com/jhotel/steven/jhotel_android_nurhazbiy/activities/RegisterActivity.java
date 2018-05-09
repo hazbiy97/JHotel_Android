@@ -1,4 +1,4 @@
-package com.jhotel.steven.jhotel_android_nurhazbiy;
+package com.jhotel.steven.jhotel_android_nurhazbiy.activities;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -15,6 +14,8 @@ import android.widget.EditText;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.jhotel.steven.jhotel_android_nurhazbiy.APIRequest.RegisterRequest;
+import com.jhotel.steven.jhotel_android_nurhazbiy.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,6 +25,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
         final EditText fullnameEditText = (EditText) findViewById(R.id.fullnameEditText);
         final EditText emailEditText = (EditText) findViewById(R.id.emailEditText);
         final EditText passwordEditText = (EditText) findViewById(R.id.passwordEditText);

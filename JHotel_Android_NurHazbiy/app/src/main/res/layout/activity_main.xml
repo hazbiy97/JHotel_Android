@@ -5,20 +5,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.jhotel.steven.jhotel_android_nurhazbiy.MainActivity">
-
-    <ExpandableListView
-        android:id="@+id/lvExp"
+    tools:context="com.jhotel.steven.jhotel_android_nurhazbiy.activities.MainActivity">
+    <android.support.design.widget.BottomNavigationView
+        android:id = "@+id/main_navbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:itemBackground="@color/colorPrimary"
+        app:itemIconTint="@color/nav_item_color"
+        app:itemTextColor="@color/nav_item_color"
+        app:menu = "@menu/nav_items">
+    </android.support.design.widget.BottomNavigationView>
+    <FrameLayout
+        android:id = "@+id/main_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="40dp"
-        android:isScrollContainer="true"/>
-
-    <Button
-        android:id="@+id/pesanan"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="@string/pesanan"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
+        app:layout_constraintBottom_toTopOf="@id/main_navbar">
+    </FrameLayout>
 </android.support.constraint.ConstraintLayout>

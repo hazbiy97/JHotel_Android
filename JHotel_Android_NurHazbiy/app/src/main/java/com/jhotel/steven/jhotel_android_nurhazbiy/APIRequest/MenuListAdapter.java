@@ -1,4 +1,4 @@
-package com.jhotel.steven.jhotel_android_nurhazbiy;
+package com.jhotel.steven.jhotel_android_nurhazbiy.APIRequest;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
+
+import com.jhotel.steven.jhotel_android_nurhazbiy.R;
 
 /**
  * Created by hazbiy on 03/05/18.
