@@ -19,15 +19,14 @@
     <string name="batal_pesanan">Batal Pesanan</string>
     <string name="finish_pesanan">Finish Pesanan</string>
     <string name="pesanan">Pesanan</string>
-    <string name="vacantroomslist">Vacant Rooms</string>
+    <string name="vacantroomslist">VacantRooms</string>
     <string name="registerpesanan">Register Pesanan</string>
     <string name="signup">Sign Up</string>
     <string name="nav_home">Home</string>
     <string name="nav_profile">Profile</string>
     <string name="nav_order">Order</string>
     <string name="tipe_kamar">Tipe Kamar</string>
-    <string name="title">Java Hotel</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="profile_button">Log Out</string>
+    <string name="title">Hoteloria</string>
+    <string name="title_activity_profile_setting">ProfileSettingActivity</string>
 </resources>

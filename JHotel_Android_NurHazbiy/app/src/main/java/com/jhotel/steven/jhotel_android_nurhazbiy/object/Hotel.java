@@ -1,4 +1,4 @@
-package com.jhotel.steven.jhotel_android_nurhazbiy.Object;
+package com.jhotel.steven.jhotel_android_nurhazbiy.object;
 
 /**
  * Created by hazbiy on 03/05/18.

@@ -1,4 +1,4 @@
-package com.jhotel.steven.jhotel_android_nurhazbiy.APIRequest;
+package com.jhotel.steven.jhotel_android_nurhazbiy.adapter;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -16,9 +16,12 @@ import android.widget.TextView;
 import com.jhotel.steven.jhotel_android_nurhazbiy.R;
 
 /**
- * Created by hazbiy on 03/05/18.
+ *  This class is used for creating vacant rooms expendable list content
+ *
+ *  @author Nur Hazbiy Shaffan
+ *  @version 1.0.0
+ *  @since May 24 2018
  */
-
 public class MenuListAdapter extends BaseExpandableListAdapter {
 
     private Context _context;
@@ -26,6 +29,13 @@ public class MenuListAdapter extends BaseExpandableListAdapter {
     // child data in format of header title, child title
     private HashMap<String, List<String>> _listDataChild;
 
+    /**
+     * Constructor of MenuListAdapter
+     *
+     * @param context Activity context's where activity called from
+     * @param listDataHeader lists of data header
+     * @param listChildData lists of data child
+     */
     public MenuListAdapter(Context context, List<String> listDataHeader,
                                  HashMap<String, List<String>> listChildData) {
         this._context = context;
@@ -33,17 +43,39 @@ public class MenuListAdapter extends BaseExpandableListAdapter {
         this._listDataChild = listChildData;
     }
 
+    /**
+     * Method getter child object from expendable list
+     *
+     * @param groupPosition value of header position
+     * @param childPosition value of child position
+     * @return child's object
+     */
     @Override
-    public Object getChild(int groupPosition, int childPosititon) {
+    public Object getChild(int groupPosition, int childPosition) {
         return this._listDataChild.get(this._listDataHeader.get(groupPosition))
-                .get(childPosititon);
+                .get(childPosition);
     }
 
+    /**
+     * Method getter child object's id from expendable list
+     *
+     * @param groupPosition value of header position
+     * @param childPosition value of child position
+     * @return child's id
+     */
     @Override
     public long getChildId(int groupPosition, int childPosition) {
         return childPosition;
     }
 
+    /**
+     * @param groupPosition
+     * @param childPosition
+     * @param isLastChild
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @Override
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
@@ -63,12 +95,20 @@ public class MenuListAdapter extends BaseExpandableListAdapter {
         return convertView;
     }
 
+    /**
+     * @param groupPosition
+     * @return
+     */
     @Override
     public int getChildrenCount(int groupPosition) {
         return this._listDataChild.get(this._listDataHeader.get(groupPosition))
                 .size();
     }
 
+    /**
+     * @param groupPosition
+     * @return
+     */
     @Override
     public Object getGroup(int groupPosition) {
         return this._listDataHeader.get(groupPosition);

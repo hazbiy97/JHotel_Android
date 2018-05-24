@@ -1,5 +1,6 @@
 package com.jhotel.steven.jhotel_android_nurhazbiy.activities;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -14,23 +15,41 @@ import android.widget.TextView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.jhotel.steven.jhotel_android_nurhazbiy.APIRequest.BuatPesananRequest;
+import com.jhotel.steven.jhotel_android_nurhazbiy.apirequest.BuatPesananRequest;
 import com.jhotel.steven.jhotel_android_nurhazbiy.R;
+import com.jhotel.steven.jhotel_android_nurhazbiy.apirequest.RequestErrorListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
+/**
+ *  This class is used for creating order activity on application
+ *
+ *  @author Nur Hazbiy Shaffan
+ *  @version 1.0.0
+ *  @since May 24 2018
+ */
 public class BuatPesananActivity extends AppCompatActivity {
     private int currentUserId, banyakHari ,idHotel;
     private double tariff;
     private String roomNumber;
     private String roomType;
+
+    /**
+     * This metod is used to override onCreate method from activity to generate layout.
+     *
+     * @param savedInstanceState saved instance state from activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buat_pesanan);
 
-        //getIntent
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.actionbar);
+
+        // get Intent Extra
         Bundle extra = getIntent().getExtras();
 
         idHotel = extra.getInt("id_hotel",0);
@@ -80,11 +99,12 @@ public class BuatPesananActivity extends AppCompatActivity {
                                     public void onClick(DialogInterface dialog, int which) {
                                         dialog.cancel();
 
-                                        //TODO finish activity and change activity from stack
+                                        // finish activity and change activity from stack
                                         finish();
                                     }
-                                });
-                                builder1.setMessage("Booking success")
+                                })
+                                        .setMessage("Booking success")
+                                        .setCancelable(false)
                                         .create()
                                         .show();
                             }
@@ -95,15 +115,16 @@ public class BuatPesananActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.cancel();
                                 }
-                            });
-                            builder1.setMessage("Booking failed!\nError Occurred")
+                            })
+                                    .setMessage("Booking failed!\nError Occurred")
+                                    .setCancelable(false)
                                     .create()
                                     .show();
                         }
                     }
                 };
                 System.out.println(banyakHari +" "+ currentUserId +" "+  idHotel +" "+  roomNumber);
-                BuatPesananRequest buatPesananRequest = new BuatPesananRequest(banyakHari, currentUserId, idHotel, roomNumber, responseListener);
+                BuatPesananRequest buatPesananRequest = new BuatPesananRequest(banyakHari, currentUserId, idHotel, roomNumber, responseListener, new RequestErrorListener("Ordering failed", "Check your internet connection",BuatPesananActivity.this));
                 RequestQueue queue = Volley.newRequestQueue(BuatPesananActivity.this);
                 queue.add(buatPesananRequest);
             }

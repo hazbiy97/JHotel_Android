@@ -5,32 +5,35 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:label="@string/title"
+        android:name=".apirequest.ApplicationVolley"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
+        android:label="@string/title"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name= ".APIRequest.ApplicationVolley">
-
-
+        android:theme="@style/AppTheme">
         <activity
             android:name=".activities.LoginActivity"
-            android:label="@string/login">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:label="@string/login"/>
         <activity
             android:name=".activities.RegisterActivity"
             android:label="@string/signup" />
         <activity
             android:name=".activities.MainActivity"
-            android:label="@string/vacantroomslist" />
+            android:label="@string/title">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activities.BuatPesananActivity"
             android:label="@string/registerpesanan" />
+        <activity
+            android:name=".fragment.ProfileSettingActivity"
+            android:label="@string/title_activity_profile_setting"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
